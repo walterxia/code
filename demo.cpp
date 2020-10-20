@@ -2,7 +2,7 @@
 
 #include "binarytree.h"
 
-int main()
+int main(int argc, char** argv)
 {
     int j= 88, i;
     unordered_set<int> set{78, 89, 33};
