@@ -1,16 +1,16 @@
 #include <unordered_set>
-
 #include "binarytree.h"
 
 int main(int argc, char** argv)
 {
-    int j= 88, i;
-    unordered_set<int> set{78, 89, 33};
-    cout << "hello wolrd powered by VS CODE" << endl;
-    cout << set.bucket_count() << endl;
-
-    BTree bt;
+    BTree bt0;
+    bt0.dump();
+    cout << "--------------------------------------------------" << endl;
+    array<char, 13> levelDatasArray = {'#', 'C', 'D', 'A', '#', 'E', 'B', 'G', '#', '#', '#', '#', 'H'};
+    vector<char> levelDatas(levelDatasArray.cbegin(), levelDatasArray.cend());
+    BTree bt(levelDatas);
     bt.dump();
-    
+    bt.dump(TraversalInOrder);
+    bt.dump(TraversalPostOrder);
     return 0;
 }
