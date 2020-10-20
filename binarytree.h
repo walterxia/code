@@ -1,3 +1,6 @@
+#include <iostream>
+using namespace std;
+
 struct BtNode
 {
     int value;
@@ -8,9 +11,9 @@ struct BtNode
 class BTree
 {
     public:
-        BTree(){}
+        BTree();
 
-        void dump(){std::cout << "BTree Dump" << std::endl;}
+        void dump(){cout << "BTree Dump" << endl;}
 
     private:
         BtNode* root;
