@@ -14,12 +14,24 @@ enum TraversalType
 {
     TraversalPreOrder,
     TraversalInOrder,
-    TraversalPostOrder
+    TraversalPostOrder,
+    TraversalLevelOrder
+};
+
+enum InvokeType
+{
+    InvokeRecursive,
+    InvokeNoRecursive
 };
 
 #define GetTraversalTypeStr(type) (type == TraversalPreOrder ? "PreOrder" : \
                                    type == TraversalInOrder ? "InOrder" : \
                                    type == TraversalPostOrder ? "PostOrder" : \
+                                   type == TraversalLevelOrder ? "LevelOrder" : \
+                                   "Error")
+
+#define GetInvokeTypeStr(type) (type == InvokeRecursive ? "Recursive" : \
+                                   type == InvokeNoRecursive ? "NoRecursive" : \
                                    "Error")
 
 class BTree
@@ -31,14 +43,15 @@ class BTree
 
         bool isEmpty() const{ return _root == nullptr;}
 
-        void preOrderTraversal(BtNode* root) const; // recursive style    sequence: root, left tree, right tree
-        void inOrderTraversal(BtNode* root) const; // recursive style    sequence: left tree, root, right tree
-        void postOrderTraversal(BtNode* root) const; // recursive style    sequence: left tree, right tree, root
+        void preOrder(BtNode* root) const; // recursive style    sequence: root, left tree, right tree
+        void inOrder(BtNode* root) const; // recursive style    sequence: left tree, root, right tree
+        void postOrder(BtNode* root) const; // recursive style    sequence: left tree, right tree, root
 
-        void preOrderTraversalNoRecur(BtNode* root) const; // recursive style    sequence: root, left tree, right tree
+        void preOrderNoRecur(BtNode* root) const; // No recursive style
+        void inOrderNoRecur(BtNode* root) const; // No recursive style
+        void postOrderNoRecur(BtNode* root) const; // No recursive style
 
-
-        void dump(const TraversalType traversalType = TraversalPreOrder);
+        void dump(const TraversalType traversalType = TraversalPreOrder, const InvokeType invokeType = InvokeRecursive);
 
     private:
         BtNode* createNewNode();

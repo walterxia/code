@@ -1,9 +1,11 @@
 #include "binarytree.h"
 
+#include <stack>
+
 BtNode* BTree::createNewNode()
 {
     BtNode* node = new BtNode();
-    cout << "Crt addr:" << node << endl;
+    //cout << "Crt addr:" << node << endl;
     node->lChild = node->rChild = nullptr;
     return node;
 }
@@ -16,7 +18,7 @@ void BTree::destroyTree(BtNode* root) //@use post order for simplicity, otherwis
             destroyTree(root->lChild);
         if(root->rChild)
             destroyTree(root->rChild);
-        cout << "Del addr:" << root << " val:" << root->value << endl;
+        //cout << "Del addr:" << root << " val:" << root->value << endl;
         free(root);
     }
 }
@@ -54,58 +56,136 @@ BTree::BTree(const vector<char>& levelDatas)
     _root = nodeArray[1];
 }
 
-void BTree::preOrderTraversal(BtNode* root) const
+void BTree::preOrder(BtNode* root) const
 {
-    if(root)
+    if(root)  // recursive end condition
     {
         cout << root->value << " ";
-        if(root->lChild)   //@easy to forget this determine statement
-            preOrderTraversal(root->lChild);
+        if(root->lChild)   //@also ok if there is no such check
+            preOrder(root->lChild);
         if(root->rChild)
-            preOrderTraversal(root->rChild);
+            preOrder(root->rChild);
     }
 }
 
-void BTree::inOrderTraversal(BtNode* root) const
-{
-    if(root)
-    {
-        if(root->lChild)
-            inOrderTraversal(root->lChild);
-        cout << root->value << " ";
-        if(root->rChild)
-            inOrderTraversal(root->rChild);
-    }
-}
-
-void BTree::postOrderTraversal(BtNode* root) const
+void BTree::inOrder(BtNode* root) const
 {
     if(root)
     {
         if(root->lChild)
-            postOrderTraversal(root->lChild);
+            inOrder(root->lChild);
+        cout << root->value << " ";
         if(root->rChild)
-            postOrderTraversal(root->rChild);
+            inOrder(root->rChild);
+    }
+}
+
+void BTree::postOrder(BtNode* root) const
+{
+    if(root)
+    {
+        if(root->lChild)
+            postOrder(root->lChild);
+        if(root->rChild)
+            postOrder(root->rChild);
         cout << root->value << " ";
     }
 }
 
-void BTree::preOrderTraversalNoRecur(BtNode* root) const
+void BTree::preOrderNoRecur(BtNode* root) const
 {
-    
+    if(root)
+    {
+        stack<BtNode*> treeStack;
+        auto curr = root;
+        while(curr)// || !treeStack.empty())  //@skip check stack if empty here
+        {
+            cout << curr->value << " " ;
+            treeStack.push(curr);
+            curr = curr->lChild;
+
+            while(!curr && !treeStack.empty())
+            {
+                curr = treeStack.top();
+                treeStack.pop();
+                curr = curr->rChild;
+            }
+        }
+    }
 }
 
-void BTree::dump(const TraversalType traversalType)
+void BTree::inOrderNoRecur(BtNode* root) const
 {
-    cout << "BTree Dump using " << GetTraversalTypeStr(traversalType) << endl;
+    if(root)
+    {
+        stack<BtNode*> treeStack;
+        auto curr = root;
+        while(curr)
+        {
+            treeStack.push(curr);
+            curr = curr->lChild;
+
+            while(!curr && !treeStack.empty())
+            {
+                curr = treeStack.top();
+                treeStack.pop();
+                cout << curr->value << " " ;
+                curr = curr->rChild;
+            }
+        }
+    }
+}
+
+void BTree::postOrderNoRecur(BtNode* root) const
+{
+    if(root)
+    {
+        stack<BtNode*> treeStack;
+        auto curr = root;
+        while(curr)
+        {
+            treeStack.push(curr);
+            curr = curr->lChild;
+
+            while(!curr && !treeStack.empty())
+            {
+                curr = treeStack.top();
+                treeStack.pop();
+                cout << curr->value << " " ;
+                curr = curr->rChild;
+            }
+        }
+    }
+}
+
+void BTree::dump(const TraversalType traversalType, const InvokeType invokeType)
+{
+    cout << "BTree Dump using " << GetTraversalTypeStr(traversalType) << "" << GetInvokeTypeStr(invokeType) << endl;
     if(!isEmpty())
     {
         if(traversalType == TraversalPreOrder)
-            preOrderTraversal(_root);
+        {
+            if(invokeType == InvokeRecursive)
+                preOrder(_root);
+            else
+                preOrderNoRecur(_root);
+        }
         else if(traversalType == TraversalInOrder)
-            inOrderTraversal(_root);
+        {
+            if(invokeType == InvokeRecursive)
+                inOrder(_root);
+            else
+                inOrderNoRecur(_root);
+        }
         else if(traversalType == TraversalPostOrder)
-            postOrderTraversal(_root);
+        {
+            if(invokeType == InvokeRecursive)
+                postOrder(_root);
+            else
+                postOrderNoRecur(_root);
+        }
+        else if(traversalType == TraversalLevelOrder)
+            cout << "TBD" << endl;
         cout << endl;
     }
     else
