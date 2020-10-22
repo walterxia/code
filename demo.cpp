@@ -14,9 +14,9 @@ int main(int argc, char** argv)
 
     bt.dump(TraversalInOrder);
     bt.dump(TraversalInOrder, InvokeNoRecursive);
-    
+
     bt.dump(TraversalPostOrder);
-    
+    bt.dump(TraversalPostOrder, InvokeNoRecursive);
     
     return 0;
 }

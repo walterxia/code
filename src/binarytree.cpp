@@ -142,6 +142,7 @@ void BTree::postOrderNoRecur(BtNode* root) const
     {
         stack<BtNode*> treeStack;
         auto curr = root;
+        auto lstVisit = root;
         while(curr)
         {
             treeStack.push(curr);
@@ -150,9 +151,16 @@ void BTree::postOrderNoRecur(BtNode* root) const
             while(!curr && !treeStack.empty())
             {
                 curr = treeStack.top();
-                treeStack.pop();
-                cout << curr->value << " " ;
-                curr = curr->rChild;
+
+                if(curr->rChild && curr->rChild != lstVisit)   //@need to add a cursor to record last printed&popped node. Otherwise come into an endless loop
+                    curr = curr->rChild;
+                else
+                {
+                    cout << curr->value << " " ;
+                    treeStack.pop();
+                    lstVisit = curr;
+                    curr = nullptr;
+                }
             }
         }
     }
