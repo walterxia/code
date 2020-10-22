@@ -51,6 +51,8 @@ class BTree
         void inOrderNoRecur(BtNode* root) const; // No recursive style
         void postOrderNoRecur(BtNode* root) const; // No recursive style
 
+        void levelOrder(BtNode* root) const;
+
         void dump(const TraversalType traversalType = TraversalPreOrder, const InvokeType invokeType = InvokeRecursive);
 
     private:

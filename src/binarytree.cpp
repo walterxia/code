@@ -1,6 +1,7 @@
 #include "binarytree.h"
 
 #include <stack>
+#include <queue>
 
 BtNode* BTree::createNewNode()
 {
@@ -166,6 +167,26 @@ void BTree::postOrderNoRecur(BtNode* root) const
     }
 }
 
+void BTree::levelOrder(BtNode* root) const
+{
+    if(root)
+    {
+        queue<BtNode*> nodeQueue;
+        nodeQueue.push(root);
+
+        while(!nodeQueue.empty())
+        {
+            auto curr = nodeQueue.front();
+            nodeQueue.pop();
+            cout << curr->value << " ";
+            if(curr->lChild)
+                nodeQueue.push(curr->lChild);
+            if(curr->rChild)
+                nodeQueue.push(curr->rChild);
+        }
+    }
+}
+
 void BTree::dump(const TraversalType traversalType, const InvokeType invokeType)
 {
     cout << "BTree Dump using " << GetTraversalTypeStr(traversalType) << "" << GetInvokeTypeStr(invokeType) << endl;
@@ -193,7 +214,7 @@ void BTree::dump(const TraversalType traversalType, const InvokeType invokeType)
                 postOrderNoRecur(_root);
         }
         else if(traversalType == TraversalLevelOrder)
-            cout << "TBD" << endl;
+            levelOrder(_root);
         cout << endl;
     }
     else
