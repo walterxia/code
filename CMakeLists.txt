@@ -8,11 +8,12 @@ project(algocode VERSION 0.1.0)
 #include(CTest)
 #enable_testing()
 
-include_directories(${PROJECT_SOURCE_DIR}/inc)
+include_directories(${PROJECT_SOURCE_DIR}/inc ${PROJECT_SOURCE_DIR}/lt)
 aux_source_directory(./src/ SrcFiles)
+aux_source_directory(./lt/ ltFiles)
 
 #set(EXECUTABLE_OUTPUT_PATH  ${PROJECT_SOURCE_DIR}/Bin)
-add_executable(algocode ${SrcFiles} demo.cpp)
+add_executable(algocode ${SrcFiles} ${ltFiles} demo.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

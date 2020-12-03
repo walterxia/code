@@ -1,7 +1,8 @@
 #include <unordered_set>
 #include "binarytree.h"
+#include "lt.h"
 
-int main(int argc, char** argv)
+void algo()
 {
     BTree bt0;
     bt0.dump();
@@ -19,6 +20,13 @@ int main(int argc, char** argv)
     bt.dump(TraversalPostOrder, InvokeNoRecursive);
 
     bt.dump(TraversalLevelOrder);
+}
+
+int main(int argc, char** argv)
+{
+    //algo();
+
+    ltMain();
     
     return 0;
 }
